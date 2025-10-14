@@ -1,0 +1,143 @@
+<button
+  id="toggleSidebar"
+  class="button is-info is-fullwidth is-hidden-tablet mb-3"
+>
+  <i class="fas fa-sliders-h mr-2"></i> Filtros
+</button>
+
+<aside id="sidebar" class="menu is-hidden-mobile">
+  {% if active_page == 'products' %}
+  <p class="menu-label">Filtrar por</p>
+  <ul class="menu-list">
+    <li>
+      <a href="{{ url_for('public.products') }}">
+        <i class="fas fa-sort mr-2"></i> Ordenar por
+      </a>
+      <ul>
+        <li>
+          <a
+            href="{{ url_for('public.products', sort='a-z', category=category_name) }}"
+            class="{% if sort == 'a-z' %}is-active{% endif %}"
+          >
+            <i class="fas fa-sort-alpha-down mr-2"></i> A-Z
+          </a>
+        </li>
+        <li>
+          <a
+            href="{{ url_for('public.products', sort='z-a', category=category_name) }}"
+            class="{% if sort == 'z-a' %}is-active{% endif %}"
+          >
+            <i class="fas fa-sort-alpha-up mr-2"></i> Z-A
+          </a>
+        </li>
+        <li>
+          <a
+            href="{{ url_for('public.products', sort='price-asc', category=category_name) }}"
+            class="{% if sort == 'price-asc' %}is-active{% endif %}"
+          >
+            <i class="fas fa-sort-amount-down mr-2"></i> Precio: menor a mayor
+          </a>
+        </li>
+        <li>
+          <a
+            href="{{ url_for('public.products', sort='price-desc', category=category_name) }}"
+            class="{% if sort == 'price-desc' %}is-active{% endif %}"
+          >
+            <i class="fas fa-sort-amount-up mr-2"></i> Precio: mayor a menor
+          </a>
+        </li>
+        <li>
+          <a
+            href="{{ url_for('public.products', sort='newest', category=category_name) }}"
+            class="{% if sort == 'newest' %}is-active{% endif %}"
+          >
+            <i class="fas fa-clock mr-2"></i> Más recientes
+          </a>
+        </li>
+        <li>
+          <a
+            href="{{ url_for('public.products', sort='oldest', category=category_name) }}"
+            class="{% if sort == 'oldest' %}is-active{% endif %}"
+          >
+            <i class="fas fa-clock mr-2"></i> Más antiguos
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <a href="{{ url_for('public.products') }}">
+        <i class="fas fa-tags mr-2"></i> Categorías
+      </a>
+      <ul>
+        {% for category in categories %}
+        <li>
+          <a
+            href="{{ url_for('public.products', category=category.slug, sort=sort) }}"
+            class="{% if category_name == category.slug %}is-active{% endif %}"
+          >
+            {{ category.name }}</a
+          >
+        </li>
+        {% endfor %}
+      </ul>
+    </li>
+  </ul>
+  {% elif active_page == 'categories' %}
+  <p class="menu-label">Ordenar categorías</p>
+  <ul class="menu-list">
+    <li>
+      <a
+        href="/categories?sort=a-z"
+        class="{% if sort == 'a-z' %}is-active{% endif %}"
+        ><i class="fas fa-sort-alpha-down mr-2"></i> A-Z</a
+      >
+    </li>
+    <li>
+      <a
+        href="/categories?sort=z-a"
+        class="{% if sort == 'z-a' %}is-active{% endif %}"
+        ><i class="fas fa-sort-alpha-up mr-2"></i> Z-A</a
+      >
+    </li>
+    <li>
+      <a
+        href="/categories?sort=newest"
+        class="{% if sort == 'newest' %}is-active{% endif %}"
+        ><i class="fas fa-clock mr-2"></i> Más recientes</a
+      >
+    </li>
+    <li>
+      <a
+        href="/categories?sort=oldest"
+        class="{% if sort == 'oldest' %}is-active{% endif %}"
+        ><i class="fas fa-clock mr-2"></i> Más antiguos</a
+      >
+    </li>
+    <li>
+      <a
+        href="/categories?sort=stock"
+        class="{% if sort == 'stock' %}is-active{% endif %}"
+        ><i class="fas fa-check-circle mr-2"></i>Con stock</a
+      >
+    </li>
+    <li>
+      <a
+        href="/categories?sort=no-stock"
+        class="{% if sort == 'no-stock' %}is-active{% endif %}"
+        ><i class="fas fa-times-circle mr-2"></i> Sin stock</a
+      >
+    </li>
+  </ul>
+  {% else %}
+  <p class="menu-label">Menú</p>
+  <ul class="menu-list">
+    <li>
+      <a><i class="fas fa-tachometer-alt mr-2"></i> Dashboard</a>
+    </li>
+    <li>
+      <a><i class="fas fa-users mr-2"></i> Clientes</a>
+    </li>
+  </ul>
+  {% endif %}
+</aside>
